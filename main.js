@@ -1,20 +1,23 @@
-const { app, BrowserWindow, Notification } = require("electron/main");
 const path = require("path");
-const { electron } = require("process");
+const { app, BrowserWindow, ipcMain, Notification } = require("electron/main");
 const isDev = !app.isPackaged;
+const { pedro } = require('./api/test.js');
 
+// basic electron code //
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
-      nodeIntegration: true,
-      contextIsolation: false,
+      worldSafeExecuteJavaScript: true,
+      nodeIntegration: false,
+      contextIsolation: true,
     },
   });
 
   win.loadFile("index.html");
+  isDev && win.webContents.openDevTools();
 }
 
 if (isDev) {
@@ -38,8 +41,18 @@ app.whenReady().then(() => {
   });
 });
 
+
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
+
+// IPC communication //
+ipcMain.on('pedro', (e, message) => {
+  pedro(message)
+})
+
+ipcMain.on("app-quit", () => {
+  app.quit()
+})
