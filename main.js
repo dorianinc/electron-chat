@@ -1,56 +1,67 @@
-// Modules
-const { app, BrowserWindow } = require("electron");
+const path = require("path");
+const { app, BrowserWindow, ipcMain } = require("electron");
+const isDev = !app.isPackaged;
 const windowStateKeeper = require("electron-window-state");
+const { displayNotification} = require("./api/test.js");
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
-
-// Create a new BrowserWindow when `app` is ready
+// basic electron code //
 function createWindow() {
-  // Window state manager
-  let winState = windowStateKeeper({
+  // Initialize the window state
+  let mainWindowState = windowStateKeeper({
     defaultWidth: 1000,
     defaultHeight: 800,
   });
 
-  mainWindow = new BrowserWindow({
-    width: winState.width,
-    height: winState.height,
-    x: winState.x,
-    y: winState.y,
+  // Log the state for debugging
+  console.log("Window state width:", mainWindowState.width);
+  console.log("Window state height:", mainWindowState.height);
+
+  const mainWindow = new BrowserWindow({
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     webPreferences: {
-      // --- !! IMPORTANT !! ---
-      // Disable 'contextIsolation' to allow 'nodeIntegration'
-      // 'contextIsolation' defaults to "true" as from Electron v12
-      contextIsolation: false,
-      nodeIntegration: true,
+      preload: path.join(__dirname, "preload.js"),
+      worldSafeExecuteJavaScript: true,
+      nodeIntegration: false,
+      contextIsolation: true,
     },
+    alwaysOnTop: true,
   });
 
-  // Load index.html into the new BrowserWindow
+  // Manage the window state
+  mainWindowState.manage(mainWindow);
+
   mainWindow.loadFile("index.html");
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
+}
 
-  // Open DevTools - Remove for PRODUCTION!
-  // mainWindow.webContents.openDevTools();
-
-  winState.manage(mainWindow);
-
-  // Listen for window being closed
-  mainWindow.on("closed", () => {
-    mainWindow = null;
+if (isDev) {
+  require("electron-reload")(__dirname, {
+    electron: path.join(__dirname, "node_modules", ".bin", "electron"),
   });
 }
 
-// Electron `app` is ready
-app.on("ready", createWindow);
+app.whenReady().then(() => {
+  createWindow();
 
-// Quit when all windows are closed - (Not macOS - Darwin)
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") app.quit();
+  app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
+  });
 });
 
-// When app icon is clicked and app is running, (macOS) recreate the BrowserWindow
-app.on("activate", () => {
-  if (mainWindow === null) createWindow();
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+});
+
+// IPC communication //
+ipcMain.on("alert-message", (e, message) => {
+  displayNotification(message);
 });
