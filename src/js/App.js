@@ -1,7 +1,8 @@
 import Badge from 'react-bootstrap/Badge';
 import React from "react";
+import HomeView from './components/HomeView';
 
-function App() {
+const App = () => {
 
   // const sendNotification = () => {
   //   electron.notificationApi.sendNotification("My custom message in app")
@@ -9,15 +10,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>
-        Example heading <Badge bg="secondary">New</Badge>
-      </h1>
-      <h2>
-        Example heading <Badge bg="secondary">New</Badge>
-      </h2>
-      <h3>
-        Example heading <Badge bg="secondary">New</Badge>
-      </h3>
+      <HomeView/>
     </div>
   );
 }
