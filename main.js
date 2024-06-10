@@ -12,9 +12,6 @@ function createWindow() {
     defaultHeight: 800,
   });
 
-  // Log the state for debugging
-  console.log("Window state width:", mainWindowState.width);
-  console.log("Window state height:", mainWindowState.height);
 
   const mainWindow = new BrowserWindow({
     x: mainWindowState.x,
@@ -25,7 +22,7 @@ function createWindow() {
       preload: path.join(__dirname, "preload.js"),
       worldSafeExecuteJavaScript: true,
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: true,
     },
     alwaysOnTop: true,
   });
@@ -33,13 +30,14 @@ function createWindow() {
   // Manage the window state
   mainWindowState.manage(mainWindow);
 
-  mainWindow.loadFile("index.html");
+  mainWindow.loadFile("./public/index.html");
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
 }
 
 if (isDev) {
+  console.log("path", __dirname)
   require("electron-reload")(__dirname, {
     electron: path.join(__dirname, "node_modules", ".bin", "electron"),
   });
