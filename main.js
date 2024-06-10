@@ -31,9 +31,9 @@ function createWindow() {
   mainWindowState.manage(mainWindow);
 
   mainWindow.loadFile("./public/index.html");
-  if (isDev) {
-    mainWindow.webContents.openDevTools();
-  }
+  // if (isDev) {
+  //   mainWindow.webContents.openDevTools();
+  // }
 }
 
 if (isDev) {

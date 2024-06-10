@@ -1,5 +1,5 @@
 import React from "react";
-import HomeView from './components/HomeView';
+import HomeView from './views/Home';
 
 const App = () => {
 
