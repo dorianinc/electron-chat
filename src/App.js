@@ -1,7 +1,10 @@
 import React from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
-import HomeView from "./views/Home";
-
+import Home from "./views/Home";
+import NavBar from "./components/Navbar";
+import Login from "./views/Login";
+import Register from "./views/Register";
+import Settings from "./views/Settings";
 
 const App = () => {
   const location = useLocation();
@@ -11,10 +14,21 @@ const App = () => {
   // }
 
   return (
-    <div className="app">
+    <div className="content-wrapper">
+      <NavBar />
+
       <Switch>
+        <Route exact path="/settings">
+          <Settings />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
         <Route exact path="/">
-          <HomeView />
+          <Home />
         </Route>
       </Switch>
     </div>
