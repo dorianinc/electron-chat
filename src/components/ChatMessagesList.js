@@ -23,7 +23,7 @@ export default function ChatMessagesList() {
           className="chat-right">
           <div className="chat-avatar">
             <img
-              src="https://i.dlpng.com/static/png/7105396_preview.png"
+              src="https://www.pinclipart.com/picdir/big/165-1653686_female-user-icon-png-download-user-colorful-icon.png"
               alt="Retail Admin" />
             <div className="chat-name">Test User 2</div>
           </div>
@@ -51,7 +51,7 @@ export default function ChatMessagesList() {
           className="chat-right">
           <div className="chat-avatar">
             <img
-              src="https://i.dlpng.com/static/png/7105396_preview.png"
+              src="https://www.pinclipart.com/picdir/big/165-1653686_female-user-icon-png-download-user-colorful-icon.png"
               alt="Retail Admin" />
             <div className="chat-name">Test User 4</div>
           </div>

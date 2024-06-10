@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import Home from "./views/Home";
+import Chat from "./views/Chat"
 import NavBar from "./components/Navbar";
 import Login from "./views/Login";
 import Register from "./views/Register";
@@ -26,6 +27,9 @@ const App = () => {
         </Route>
         <Route exact path="/register">
           <Register />
+        </Route>
+        <Route exact path="/chat">
+          <Chat />
         </Route>
         <Route exact path="/">
           <Home />
