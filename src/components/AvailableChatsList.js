@@ -1,8 +1,9 @@
 
 import React from "react";
-
+import { useHistory } from "react-router-dom";
 
 const AvailableChatsList = () => {
+  const history = useHistory();
   return (
     <div className="row mt-3">
     {false && (
@@ -16,7 +17,7 @@ const AvailableChatsList = () => {
           <h5 className="card-title">Chat 1</h5>
           <p className="card-text">Some Chat 1 Description</p>
           <button
-            onClick={() => {}}
+            onClick={() => history.push("/chat/1")}
             className="btn btn-outline-primary"
           >
             Join Chat
@@ -30,7 +31,7 @@ const AvailableChatsList = () => {
           <h5 className="card-title">Chat 2</h5>
           <p className="card-text">Some Chat 2 Description</p>
           <button
-            onClick={() => {}}
+            onClick={() => history.push("/chat/2")}
             className="btn btn-outline-primary"
           >
             Join Chat
@@ -44,7 +45,7 @@ const AvailableChatsList = () => {
           <h5 className="card-title">Chat 3</h5>
           <p className="card-text">Some Chat 3 Description</p>
           <button
-            onClick={() => {}}
+            onClick={() => history.push("/chat/3")}
             className="btn btn-outline-primary"
           >
             Join Chat
@@ -58,7 +59,7 @@ const AvailableChatsList = () => {
           <h5 className="card-title">Chat 4</h5>
           <p className="card-text">Some Chat 4 Description</p>
           <button
-            onClick={() => {}}
+            onClick={() => history.push("/chat/4")}
             className="btn btn-outline-primary"
           >
             Join Chat

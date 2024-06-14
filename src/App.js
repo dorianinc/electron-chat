@@ -1,15 +1,13 @@
 import React from "react";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Home from "./views/Home";
-import Chat from "./views/Chat"
+import Chat from "./views/Chat";
 import NavBar from "./components/Navbar";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Settings from "./views/Settings";
 
 const App = () => {
-  const location = useLocation();
-  console.log("location => ", location.pathname);
   // const sendNotification = () => {
   //   electron.notificationApi.sendNotification("My custom message in app")
   // }
@@ -28,7 +26,7 @@ const App = () => {
         <Route exact path="/register">
           <Register />
         </Route>
-        <Route exact path="/chat">
+        <Route path="/chat/:id">
           <Chat />
         </Route>
         <Route exact path="/">

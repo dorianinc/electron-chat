@@ -1,12 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useParams } from "react-router-dom";
 
-import ChatUserList from '../components/ChatUsersList';
-import ChatMessagesList from '../components/ChatMessagesList';
-import ViewTitle from '../components/shared/ViewTitle';
+import ChatUserList from "../components/ChatUsersList";
+import ChatMessagesList from "../components/ChatMessagesList";
+import ViewTitle from "../components/shared/ViewTitle";
 
 export default function Chat() {
-
+  const params = useParams();
+  console.log("params => ", params.id);
 
   return (
     <div className="row no-gutters fh">
@@ -14,9 +15,9 @@ export default function Chat() {
         <ChatUserList />
       </div>
       <div className="col-9 fh">
-        <ViewTitle />
+        <ViewTitle channelName={params.id} />
         <ChatMessagesList />
       </div>
     </div>
-  )
+  );
 }
