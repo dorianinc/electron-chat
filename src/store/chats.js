@@ -16,9 +16,7 @@ export const getChats = (chats) => ({
 
 export const fetchChatsThunk = () => async (dispatch) => {
   const res = await api.fetchAllChats();
-
   if (res.length) {
-    console.log("🖥️  res: ", res);
     dispatch(getChats(res))
   }
 };
