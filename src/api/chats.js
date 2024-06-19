@@ -6,7 +6,9 @@ export const fetchAllChats = async () => {
   const querySnapshot = await getDocs(collection(db, "chats"));
   
   querySnapshot.forEach((doc) => {
-    data.push(doc.data())
+    const chatData = doc.data();
+    chatData.id = doc.id;
+    data.push(chatData)
   });
   return data;
 };

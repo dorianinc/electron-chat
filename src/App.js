@@ -8,10 +8,6 @@ import Register from "./views/Register";
 import Settings from "./views/Settings";
 
 const App = () => {
-  // const sendNotification = () => {
-  //   electron.notificationApi.sendNotification("My custom message in app")
-  // }
-
   return (
     <div className="content-wrapper">
       <NavBar />
