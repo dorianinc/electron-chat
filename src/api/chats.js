@@ -1,13 +1,13 @@
 import { db } from "../db/firestore";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 
-export const fetchChats = async () => {
-  console.log("--- fetching chats ---");
+export const fetchAllChats = async () => {
+  const data = [];
   const querySnapshot = await getDocs(collection(db, "chats"));
   
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
+    data.push(doc.data())
   });
+  return data;
 };
 

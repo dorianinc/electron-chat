@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/dorianinc/electronChat#readme",
   "devDependencies": {
+    "dotenv-webpack": "^8.1.0",
     "electron": "^30.0.4",
     "electron-reload": "^2.0.0-alpha.1"
   },
