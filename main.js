@@ -2,7 +2,6 @@ const path = require("path");
 const { app, BrowserWindow, ipcMain } = require("electron");
 const isDev = !app.isPackaged;
 const windowStateKeeper = require("electron-window-state");
-const { displayNotification} = require("./api/test.js");
 
 // basic electron code //
 function createWindow() {
@@ -19,10 +18,11 @@ function createWindow() {
     width: mainWindowState.width,
     height: mainWindowState.height,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
       worldSafeExecuteJavaScript: true,
-      nodeIntegration: true,
-      contextIsolation: true,
+      // Disable 'contextIsolation' to allow 'nodeIntegration'
+      // 'contextIsolation' defaults to "true" as from Electron v12
+      contextIsolation: false,
+      nodeIntegration: true
     },
     alwaysOnTop: true,
   });
@@ -31,9 +31,9 @@ function createWindow() {
   mainWindowState.manage(mainWindow);
 
   mainWindow.loadFile("./public/index.html");
-  // if (isDev) {
-  //   mainWindow.webContents.openDevTools();
-  // }
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
 }
 
 if (isDev) {
@@ -59,7 +59,7 @@ app.on("window-all-closed", () => {
   }
 });
 
-// IPC communication //
-ipcMain.on("alert-message", (e, message) => {
-  displayNotification(message);
-});
+// // IPC communication //
+// ipcMain.on("alert-message", (e, message) => {
+//   displayNotification(message);
+// });
