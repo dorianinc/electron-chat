@@ -1,13 +1,22 @@
-
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
+    console.log("🖥️ data: ", data);
     alert(JSON.stringify(data));
-  }
+  };
+
+  const handleLoginAsTestUser = () => {
+    // Fill in the form fields with predefined values
+    setValue("email", "user@test.com");
+    setValue("password", "password");
+
+    // Submit the form programmatically
+    handleSubmit(onSubmit)();
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="centered-container-form">
@@ -17,27 +26,38 @@ export default function LoginForm() {
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
-            {...register('email')}
+            {...register("email")}
             type="email"
             className="form-control"
             id="email"
             name="email"
-            aria-describedby="emailHelp" />
+            aria-describedby="emailHelp"
+          />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-            {...register('password')}
+            {...register("password")}
             type="password"
             name="password"
             className="form-control"
-            id="password" />
+            id="password"
+          />
         </div>
-        { false && <div className="alert alert-danger small">Some error</div>}
-        <button
-          type="submit"
-          className="btn btn-outline-primary">Login</button>
+        {false && <div className="alert alert-danger small">Some error</div>}
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button type="submit" className="btn btn-outline-primary">
+            Login
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-success"
+            onClick={handleLoginAsTestUser}
+          >
+            Login as testUser
+          </button>
+        </div>
       </div>
     </form>
-  )
+  );
 }

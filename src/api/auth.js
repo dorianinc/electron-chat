@@ -1,4 +1,5 @@
 import { db } from "../db/firestore";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged  } from "firebase/auth";
 import {
   doc,
   collection,
@@ -9,10 +10,30 @@ import {
   where,
 } from "firebase/firestore";
 
+export const registerUserOnFireBase = async (email, password) => {
+  console.log("🖥️  email, password : ", email, password);
+
+  const auth = getAuth();
+
+  try {
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+  } catch (error) {
+    const errorCode = error.code;
+    console.log("🖥️  errorCode: ", errorCode);
+    const errorMessage = error.message;
+    console.log("🖥️  errorMessage: ", errorMessage);
+    // ..
+  }
+};
+
+export co
+
 export const registerUser = async ({ email, password, username, avatar }) => {
   console.log("----- Registering User -------");
-
-  
   try {
     if (!email || !password || !username || !avatar) {
       throw new Error("Missing required fields for registration.");
@@ -20,39 +41,33 @@ export const registerUser = async ({ email, password, username, avatar }) => {
 
     const emailUnique = await isEmailUnique(email);
     if (!emailUnique) {
-      console.log("Email is already in use.");
       throw new Error("Email is already in use.");
     }
 
     const usernameUnique = await isUsernameUnique(username);
     if (!usernameUnique) {
-      console.log("Username is already in use.");
       throw new Error("Username is already in use.");
     }
-    
+
     const docRef = doc(db, "profiles", email);
-    const res = await setDoc(docRef, {
+    await setDoc(docRef, {
       email,
       username,
       password,
       avatar,
       joinedChats: [],
     });
-    console.log("🖥️  res: ", res);
-    console.log("Successful");
-
     const user = await signInUser({ email, password });
+    await registerUserOnFireBase(email, password)
     return user;
   } catch (error) {
     console.log(`Unsuccessful returned error: ${error.message}`);
-    throw new Error(`Registration failed: ${error.message}`);
+    throw new Error(`${error.message}`);
   }
 };
 
 export const signInUser = async ({ email, password }) => {
   console.log("----- Signing in User -------");
-  // console.log("🖥️  email: ", email);
-  // console.log("🖥️  password: ", password);
 
   try {
     const docRef = doc(db, "profiles", email);
@@ -78,7 +93,6 @@ export const signInUser = async ({ email, password }) => {
 
 export const isEmailUnique = async (email) => {
   console.log("----- Checking if Email is Unique -------");
-  console.log("🖥️  email: ", email);
 
   const docRef = doc(db, "profiles", email);
   const docSnap = await getDoc(docRef);
@@ -92,16 +106,14 @@ export const isEmailUnique = async (email) => {
 
 export const isUsernameUnique = async (username) => {
   console.log("----- Checking if Username is Unique -------");
-  console.log("🖥️  username: ", username);
 
-  const usersRef = collection(db, "profiles"); // Replace 'users' with your collection name
+  const usersRef = collection(db, "profiles");
   const q = query(usersRef, where("username", "==", username));
-
   const querySnapshot = await getDocs(q);
-  console.log("🖥️  querySnapshot: ", querySnapshot)
-  if (querySnapshot.empty) {
-    return true;
-  } else {
+
+  if (!querySnapshot.empty) {
     return false;
+  } else {
+    return true;
   }
 };
