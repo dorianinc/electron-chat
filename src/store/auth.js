@@ -14,9 +14,7 @@ export const registerUser = (chats) => ({
 
 /////////////////// Thunks ///////////////////
 export const registerUserThunk = (data) => async (dispatch) => {
-  console.log("🖥️  data in registerUserThunk: ", data);
-  const res = api.register(data);
-  console.log("🖥️  res in registerUserThunk : ", res);
+  const res = api.registerUser(data);
   // if (res.length) {
   //   dispatch(registerUser(res));
   // }
@@ -27,7 +25,6 @@ const authReducer = (state = {}, action) => {
   switch (action.type) {
     case REGISTER_USER:
       newState = {};
-      console.log("🖥️  action: ", action);
       //   action.chats.forEach((chat) => {
       //     newState[chat.id] = chat;
       //   });

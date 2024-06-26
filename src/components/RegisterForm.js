@@ -8,7 +8,6 @@ export default function RegisterForm() {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log("sending data from register form: ", data)
     dispatch(registerUserThunk(data))
   };
 

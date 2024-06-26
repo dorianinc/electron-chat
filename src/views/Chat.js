@@ -7,7 +7,6 @@ import ViewTitle from "../components/shared/ViewTitle";
 
 export default function ChatView() {
   const params = useParams();
-  console.log("params => ", params.id);
 
   return (
     <div className="row no-gutters fh">

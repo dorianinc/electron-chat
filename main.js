@@ -18,7 +18,7 @@ function createWindow() {
     width: mainWindowState.width,
     height: mainWindowState.height,
     webPreferences: {
-      worldSafeExecuteJavaScript: true,
+      // worldSafeExecuteJavaScript: true,
       // Disable 'contextIsolation' to allow 'nodeIntegration'
       // 'contextIsolation' defaults to "true" as from Electron v12
       contextIsolation: false,
@@ -37,7 +37,6 @@ function createWindow() {
 }
 
 if (isDev) {
-  console.log("path", __dirname)
   require("electron-reload")(__dirname, {
     electron: path.join(__dirname, "node_modules", ".bin", "electron"),
   });

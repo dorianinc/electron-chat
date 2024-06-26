@@ -6,7 +6,11 @@ import NavBar from "./components/Navbar";
 import WelcomeView from "./views/Welcome";
 import SettingsView from "./views/Settings";
 
+
+
 const App = () => {
+
+
   return (
     <div className="content-wrapper">
       <NavBar />

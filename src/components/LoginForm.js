@@ -6,7 +6,6 @@ export default function LoginForm() {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = data => {
-    console.log("🖥️  data: ", data)
     alert(JSON.stringify(data));
   }
 
@@ -24,7 +23,6 @@ export default function LoginForm() {
             id="email"
             name="email"
             aria-describedby="emailHelp" />
-          <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
