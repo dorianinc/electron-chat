@@ -5,7 +5,7 @@ import ChatUserList from "../components/ChatUsersList";
 import ChatMessagesList from "../components/ChatMessagesList";
 import ViewTitle from "../components/shared/ViewTitle";
 
-export default function Chat() {
+export default function ChatView() {
   const params = useParams();
   console.log("params => ", params.id);
 

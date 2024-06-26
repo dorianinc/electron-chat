@@ -1,32 +1,27 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "./views/Home";
-import Chat from "./views/Chat";
+import HomeView from "./views/Home";
+import ChatView from "./views/Chat";
 import NavBar from "./components/Navbar";
-import Login from "./views/Login";
-import Register from "./views/Register";
-import Settings from "./views/Settings";
+import WelcomeView from "./views/Welcome";
+import SettingsView from "./views/Settings";
 
 const App = () => {
   return (
     <div className="content-wrapper">
       <NavBar />
-
       <Switch>
-        <Route exact path="/settings">
-          <Settings />
+        <Route exact path="/">
+          <WelcomeView />
         </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <Route exact path="/register">
-          <Register />
+        <Route path="/home">
+          <HomeView />
         </Route>
         <Route path="/chat/:id">
-          <Chat />
+          <ChatView />
         </Route>
-        <Route exact path="/">
-          <Home />
+        <Route path="/settings">
+          <SettingsView />
         </Route>
       </Switch>
     </div>

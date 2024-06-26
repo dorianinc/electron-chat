@@ -5,7 +5,7 @@ import ViewTitle from "../components/shared/ViewTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchChatsThunk } from "../store/chats";
 
-const Home = () => {
+const HomeView = () => {
   const dispatch = useDispatch();
   const chats = useSelector((state) => Object.values(state.chats));
 
@@ -30,4 +30,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeView;

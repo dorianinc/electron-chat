@@ -1,22 +1,13 @@
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../actions/auth';
-import LoadingView from './shared/LoadingView';
 
 export default function LoginForm() {
   const { register, handleSubmit } = useForm();
-  const dispatch = useDispatch();
-  const error = useSelector(({auth}) => auth.login.error)
-  const isChecking = useSelector(({auth}) => auth.login.isChecking)
 
   const onSubmit = data => {
-    dispatch(loginUser(data));
-  }
-
-  if (isChecking) {
-    return <LoadingView />
+    console.log("🖥️  data: ", data)
+    alert(JSON.stringify(data));
   }
 
   return (
@@ -27,7 +18,7 @@ export default function LoginForm() {
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
-            ref={register}
+            {...register('email')}
             type="email"
             className="form-control"
             id="email"
@@ -38,13 +29,13 @@ export default function LoginForm() {
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-            ref={register}
+            {...register('password')}
             type="password"
             name="password"
             className="form-control"
             id="password" />
         </div>
-        { error && <div className="alert alert-danger small">{error.message}</div>}
+        { false && <div className="alert alert-danger small">Some error</div>}
         <button
           type="submit"
           className="btn btn-outline-primary">Login</button>
