@@ -1,18 +1,9 @@
-const { ipcRenderer, contextBridge } = require("electron");
+const { contextBridge, ipcRenderer } = require('electron');
 
-// contextBridge.exposeInMainWorld("e_notification", {
-//   sendNotification(message) {
-//     ipcRenderer.send("pedro", message);
-//   },
-// });
-
-contextBridge.exposeInMainWorld("electron", {
-  notificationApi: {
-    sendNotification(message) {
-      ipcRenderer.send("alert-message", message);
-    },
-  },
-  productApi: {},
-  matchApi: {},
-  settingApi: {},
+// Expose safe APIs to the renderer process
+contextBridge.exposeInMainWorld('electron', {
+  ipcRenderer: {
+    send: (channel, data) => ipcRenderer.send(channel, data),
+    on: (channel, func) => ipcRenderer.on(channel, (event, ...args) => func(event, ...args))
+  }
 });

@@ -3,10 +3,9 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
-  // TODO: Explain Source Map
-  devtool: 'inline-source-map',
-  target: 'electron-renderer',
+  entry: './src/index.js', // Adjust entry point as per your project structure
+  devtool: 'inline-source-map', // Source map for better debugging
+  target: 'electron-renderer', // Target electron-renderer for Electron compatibility
   module: {
     rules: [
       {
@@ -15,30 +14,26 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [[
-              '@babel/preset-env', {
-                targets: {
-                  esmodules: true
-                }
-              }],
-              '@babel/preset-react']
+            presets: [
+              ['@babel/preset-env', { targets: { esmodules: true } }],
+              '@babel/preset-react'
+            ]
           }
         }
       },
       {
         test: [/\.s[ac]ss$/i, /\.css$/i],
         use: [
-          // Creates `style` nodes from JS strings
           'style-loader',
-          // Translates CSS into CommonJS
           'css-loader',
-          // Compiles Sass to CSS
           'sass-loader',
         ],
       }
     ]
   },
-  plugins: [new Dotenv()],
+  plugins: [
+    new Dotenv(), // Load environment variables from .env file
+  ],
   resolve: {
     extensions: ['.js'],
   },

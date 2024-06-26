@@ -15,7 +15,7 @@ export const registerUser = (chats) => ({
 /////////////////// Thunks ///////////////////
 export const registerUserThunk = (data) => async (dispatch) => {
   console.log("🖥️  data in registerUserThunk: ", data);
-  const res = await api.register(data);
+  const res = api.register(data);
   console.log("🖥️  res in registerUserThunk : ", res);
   // if (res.length) {
   //   dispatch(registerUser(res));
