@@ -8,7 +8,7 @@ export default function RegisterForm() {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    dispatch(registerUserThunk(data))
+    dispatch(registerUserThunk(data));
   };
 
   return (

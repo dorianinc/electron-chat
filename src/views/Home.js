@@ -9,7 +9,6 @@ const HomeView = () => {
   const dispatch = useDispatch();
   const chats = useSelector((state) => Object.values(state.chats));
 
-
   useEffect(() => {
     dispatch(fetchChatsThunk());
   }, [dispatch]);
@@ -18,12 +17,12 @@ const HomeView = () => {
   return (
     <div className="row no-gutters fh">
       <div className="col-3 fh">
-        <JoinedChatsList chats={chats}/>
+        <JoinedChatsList chats={chats} />
       </div>
       <div className="col-9 fh">
         <ViewTitle />
         <div className="container-fluid">
-          <AvailableChatsList chats={chats}/>
+          <AvailableChatsList chats={chats} />
         </div>
       </div>
     </div>

@@ -9,7 +9,6 @@ import {
   where,
 } from "firebase/firestore";
 
-
 export const registerUser = async ({ email, password, username, avatar }) => {
   try {
     if (!email || !password || !username || !avatar) {
@@ -51,7 +50,7 @@ export const signInUser = async ({ email, password }) => {
     if (docSnap.exists()) {
       const user = docSnap.data();
       if (user.password === password) {
-        console.log("this is your user: ", user)
+        console.log("this is your user: ", user);
         return user;
       } else {
         throw new Error("Incorrect email or password");

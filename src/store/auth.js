@@ -29,7 +29,6 @@ export const signInUserThunk = (data) => async (dispatch) => {
   }
 };
 
-
 export const signOutUserThunk = () => async (dispatch) => {
   dispatch(getUser({}));
 };
