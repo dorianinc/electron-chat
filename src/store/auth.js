@@ -15,7 +15,6 @@ export const getUser = (user) => ({
 /////////////////// Thunks ///////////////////
 export const registerUserThunk = (data) => async (dispatch) => {
   const res = await api.registerUser(data);
-  console.log("🖥️  res: ", res);
   if (Object.values(res).length) {
     dispatch(getUser(res));
   }
@@ -23,7 +22,6 @@ export const registerUserThunk = (data) => async (dispatch) => {
 
 export const signInUserThunk = (data) => async (dispatch) => {
   const res = await api.signInUser(data);
-  console.log("🖥️  res: ", res);
   if (Object.values(res).length) {
     dispatch(getUser(res));
   }

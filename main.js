@@ -1,40 +1,62 @@
 const path = require("path");
-const { app, BrowserWindow, ipcMain } = require("electron");
-const isDev = !app.isPackaged;
+const { app, BrowserWindow, Menu, Tray } = require("electron");
 const windowStateKeeper = require("electron-window-state");
+const dockIcon = path.join(__dirname, "assets", "images", "react_app_logo.png");
+const trayIcon = path.join(__dirname, "assets", "images", "react_icon.png");
+const isDev = !app.isPackaged;
 
-// basic electron code //
-function createWindow() {
-  // Initialize the window state
-  let mainWindowState = windowStateKeeper({
+let windowState;
+let mainWindow;
+let splashWindow;
+
+const createWindow = () => {
+  windowState = windowStateKeeper({
     defaultWidth: 1000,
     defaultHeight: 800,
   });
 
-
-  const mainWindow = new BrowserWindow({
-    x: mainWindowState.x,
-    y: mainWindowState.y,
-    width: mainWindowState.width,
-    height: mainWindowState.height,
+  mainWindow = new BrowserWindow({
+    x: windowState.x,
+    y: windowState.y,
+    width: windowState.width,
+    height: windowState.height,
+    backgroundColor: "#f2f2f2",
+    show: false,
     webPreferences: {
-      // worldSafeExecuteJavaScript: true,
-      // Disable 'contextIsolation' to allow 'nodeIntegration'
-      // 'contextIsolation' defaults to "true" as from Electron v12
       contextIsolation: false,
-      nodeIntegration: true
+      nodeIntegration: true,
     },
     alwaysOnTop: true,
   });
 
-  // Manage the window state
-  mainWindowState.manage(mainWindow);
-
+  windowState.manage(mainWindow);
   mainWindow.loadFile("./public/index.html");
-  if (isDev) {
-    mainWindow.webContents.openDevTools();
-  }
-}
+  return mainWindow;
+};
+
+const createSplashWindow = () => {
+  windowState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 800,
+  });
+
+  splashWindow = new BrowserWindow({
+    x: windowState.x,
+    y: windowState.y,
+    width: 600,
+    height: 400,
+    backgroundColor: "#6e707e",
+    frame: false,
+    transparent: true,
+    webPreferences: {
+      contextIsolation: false,
+      nodeIntegration: true,
+    },
+  });
+
+  splashWindow.loadFile("./public/splash.html");
+  return splashWindow;
+};
 
 if (isDev) {
   require("electron-reload")(__dirname, {
@@ -42,13 +64,27 @@ if (isDev) {
   });
 }
 
-app.whenReady().then(() => {
-  createWindow();
+if (process.platform === "darwin") {
+  app.dock.setIcon(dockIcon);
+}
 
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
+let tray = null;
+app.whenReady().then(() => {
+  const template = require("./utils/Menu").createTemplate();
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+
+  tray = new Tray(trayIcon);
+  tray.setContextMenu(menu);
+
+  const splash = createSplashWindow();
+  const mainApp = createWindow();
+
+  mainApp.once("ready-to-show", () => {
+    setTimeout(() => {
+      splash.destroy();
+      mainApp.show();
+    }, 1000);
   });
 });
 
@@ -57,8 +93,3 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
-
-// // IPC communication //
-// ipcMain.on("alert-message", (e, message) => {
-//   displayNotification(message);
-// });

@@ -16,7 +16,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log("fetch user =>", fetchUser);
     if (fetchUser.username) {
       setUserExist(true);
     } else {

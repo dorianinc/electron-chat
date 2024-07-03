@@ -37,7 +37,6 @@ export const registerUser = async ({ email, password, username, avatar }) => {
     const user = await signInUser({ email, password });
     return user;
   } catch (error) {
-    console.log(`Unsuccessful returned error: ${error.message}`);
     throw new Error(`${error.message}`);
   }
 };
@@ -50,7 +49,6 @@ export const signInUser = async ({ email, password }) => {
     if (docSnap.exists()) {
       const user = docSnap.data();
       if (user.password === password) {
-        console.log("this is your user: ", user);
         return user;
       } else {
         throw new Error("Incorrect email or password");
