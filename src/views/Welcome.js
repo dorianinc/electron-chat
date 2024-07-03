@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 
 export default function Welcome() {
   const [isLoginView, setIsLogin] = useState(true);
+
 
   const optInText = isLoginView ?
     ['Need an account?', 'Register'] :

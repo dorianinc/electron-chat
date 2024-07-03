@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
+import { useSelector } from "react-redux";
 import HomeView from "./views/Home";
 import ChatView from "./views/Chat";
 import NavBar from "./components/Navbar";
@@ -9,14 +10,24 @@ import SettingsView from "./views/Settings";
 
 
 const App = () => {
+  const [userExist, setUserExist] = useState(false)
+  const fetchUser = useSelector(state => state.auth)
 
+  useEffect(() => {
+    console.log("fetch user =>", fetchUser)
+    if(fetchUser.username){
+      setUserExist(true)
+    }else{
+      setUserExist(false)
+    }
+  }, [fetchUser])
 
   return (
     <div className="content-wrapper">
-      <NavBar />
+      <NavBar userExist={userExist}/>
       <Switch>
         <Route exact path="/">
-          <WelcomeView />
+          {!userExist ? <WelcomeView /> : <HomeView/>}
         </Route>
         <Route path="/home">
           <HomeView />

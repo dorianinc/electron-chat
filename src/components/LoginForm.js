@@ -1,20 +1,20 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { signInUserThunk } from "../store/auth";
 
 export default function LoginForm() {
+  const dispatch = useDispatch();
   const { register, handleSubmit, setValue } = useForm();
 
   const onSubmit = (data) => {
-    console.log("🖥️ data: ", data);
-    alert(JSON.stringify(data));
+    dispatch(signInUserThunk(data));
   };
 
   const handleLoginAsTestUser = () => {
-    // Fill in the form fields with predefined values
     setValue("email", "user@test.com");
     setValue("password", "password");
 
-    // Submit the form programmatically
     handleSubmit(onSubmit)();
   };
 

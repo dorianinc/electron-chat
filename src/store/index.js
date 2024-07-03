@@ -4,7 +4,7 @@ import chatsReducer from "./chats";
 import authReducer from "./auth";
 
 const rootReducer = combineReducers({
-  authReducer: authReducer,
+  auth: authReducer,
   chats: chatsReducer,
 });
 
